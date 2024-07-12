@@ -6,7 +6,9 @@ This tool is applicable for 1-to-1, 1-to-many, many-to-many matches and deduplic
 
 ## Version
 
-The latest version of Beam is **v1.3**. See [Beam Version Tracker](docs/Beam%20Version%20Tracker.xlsx) for notes on current and past versions.
+The latest version of Beam is **v1.4**. Past versions are not available on this repository.
+
+See [Beam Version Tracker](docs/Beam%20Version%20Tracker.xlsx) for notes on current and past versions.
 
 ## Match Algorithm
 
@@ -79,6 +81,26 @@ Each of the following stage of the match can be run separately. See the scripts'
 - `matching/match.py`
 - `postprocessing/postprocess.py`
 - `match_rates/get_match_rates.py` (currently not applicable to M:M matches).
+
+### Review differences between thresholds
+
+To review pairwise matches that reflect the differences between strict, moderate, and relaxed thresholds, run the following line from the main directory:
+
+    `python3 clerical_review/create_clerical_review_files.py`
+
+This script produces 3 text files, for the following threshold groups:
+    - strict and moderate
+    - moderate and relaxed
+    - relaxed and review
+
+For each pass in the match file, the 100 matches with the lowest scores for
+the higher threshold and the 100 matches with the highest scores for the lower
+threshold are printed, along with a line indicating the cutoff point.
+
+Note that the record linkage module does not use a score cutoff to determine
+matches. The clerical review files are not to be used to determine what
+score values to cutoff at, but instead ensure that the logic used is correctly
+identifying matches.
 
 ## Repository Structure
 
