@@ -148,8 +148,11 @@ print("Ending matching: ", datetime.datetime.now())
 print("All similarity calculation complete.")
 
 ### Print match counts ### -------------------------------------------------
+gid_passes = ['dup_' + gid for gid in config['ground_truth_ids']]
+reg_passes = list(range(len(config['blocks_by_pass'])))
+all_passes = gid_passes + reg_passes
 # Per pass
-for p in range(len(config['blocks_by_pass'])):
+for p in all_passes:
     match_functions.print_match_count(counts, passnum=p)
 # Entire match
 match_functions.print_match_count(counts)
