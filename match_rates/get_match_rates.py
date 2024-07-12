@@ -81,11 +81,13 @@ else:
     table_b = None
     id_b = None
 
+database_information = config['database_information']
+
 # Get amount of original ids for later calculations
 if matchtype == "12M":
-    total = find_total_ids(table_b, id_b)
+    total = find_total_ids(database_information, table_b, id_b)
 else:
-    total = find_total_ids(table_a, id_a)
+    total = find_total_ids(database_information, table_a, id_a)
 
 print(f"There were originally {total} ids\n")
 

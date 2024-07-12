@@ -118,21 +118,23 @@ def get_our_raw_matches(filename, matchtype):
     return (all_matches, strict_matches)
 
 
-def find_total_ids(table, id):
+def find_total_ids(database_information, table, id):
     '''
     Finds the number of ids originally in a table
     Takes in the table name in match schema and the id
 
     Returns int
     '''
-    dbname = 'postgres'
-    host = 'etldev'
+    schema = database_information['schema']
+    dbname = database_information['dbname']
+    host = database_information['host']
+
     conn = psycopg2.connect(host=host, dbname=dbname)
     cursor = conn.cursor()
     cmd = '''SELECT COUNT(DISTINCT {id})
             FROM {schema}.{table}
             '''.format(id=id,
-                schema="match",
+                schema=schema,
                 table=table)
     cursor.execute(cmd)
     total = cursor.fetchone()[0]
