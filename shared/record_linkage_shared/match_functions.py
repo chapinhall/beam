@@ -672,13 +672,16 @@ def print_match_count(counts, passnum=None):
     '''
     if passnum is None:
         p_mask = counts.passnum.notnull()
-        sums = counts[p_mask].fillna(0).groupby(["strictness"]).sum().reset_index()
+        sums = counts[p_mask].fillna(0).groupby(["strictness"]).agg({'match': sum}).reset_index()
         print('=== All Passes ===')
     else:
         p_mask = counts.passnum == passnum
         sums = counts[p_mask].fillna(0).groupby(["passnum",
                                                  "strictness"]).sum().reset_index()
-        print('=== Pass {} ==='.format(passnum))
+        if str(passnum).startswith('dup'):
+            print('=== Ground truth ID {} ==='.format(passnum[4:]))
+        else:
+            print('=== Pass {} ==='.format(passnum))
     if "match" not in sums.columns:
         sums["match"] = 0
     strict = sums.loc[sums['strictness'] == 'strict']["match"]
